@@ -50,7 +50,7 @@ class IpcLeaderController extends Controller
     }
     
     public function edit(User $ipcLeader) {
-      // $ipcLeader = $this->attachPicture($ipcLeader);
+      $ipcLeader = $this->attachPicture($ipcLeader);
       
       return view('cms.forms.ipc_leader-form', [
         'breadcrumb_active' => 'Update IpcLeader',
@@ -72,7 +72,7 @@ class IpcLeaderController extends Controller
 
       $role = Role::where('name', 'ipc_leader')->first();
       $request->merge(['password' => bcrypt(strtoupper($request->last_name))]);
-      $role->users()->create($request->all());
+      $ipcLeader = $role->users()->create($request->all());
      
   		if ($ipcLeader && $request->hasFile('picture')) {
   		$this->updatePicture($request, $ipcLeader);
@@ -90,7 +90,8 @@ class IpcLeaderController extends Controller
       return [
         'first_name'=> 'required', 
         'last_name'=> 'required', 
-        'phone_number'=> 'required',
+        'email'=> 'required|unique:users',
+        'phone_number'=> 'required|unique:users',
         'device_sn'=> 'nullable', 
         'device_imei'=> 'nullable', 
         'description'=> 'nullable',
@@ -121,20 +122,18 @@ class IpcLeaderController extends Controller
     {
       $this->validate($request, $this->rules($id), $this->messages());
       $ipcLeader = User::updateOrCreate(compact('id'), $request->all());
-      return $ipcLeader;
+      //return $ipcLeader;
        return $this->attachPicture($ipcLeader);
     }
     
     public function updatePicture(Request $request, User $ipcLeader)
     {
       $this->validate($request, ['picture' => 'nullable|file|image|max:2048',]);
-      if($ipcLeader->hasMedia('ipc_leader_pictures')) {
-       $ipcLeader->clearMediaCollection('ipc_leader_pictures');
-      }
+      $ipcLeader->clearMediaCollection('ipc_leader_pictures');
       $extension = $request->file('picture')->getClientOriginalExtension();
       $fileName = uniqid() . $extension;
       $ipcLeader->addMediaFromRequest('picture')
-              ->usingFileName($fileName)->toMediaCollection('ipc_leader_pictures');
+                ->usingFileName($fileName)->toMediaCollection('ipc_leader_pictures');
       return $this->attachPicture($ipcLeader)->picture;
     }
     

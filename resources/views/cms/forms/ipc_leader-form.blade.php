@@ -84,7 +84,7 @@
                 <label for="name">Description:</label>
                 <textarea name="description" rows="5" 
                   class="form-control" v-model="form.description"
-                  required></textarea>
+                  ></textarea>
               </div>
               <div class="form-group">
                 <label for="name">Status:</label>
