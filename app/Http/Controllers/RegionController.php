@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Region;
-use App\Program;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RegionsExport;
+use App\Exports\RegionsInport;
+
+
 
 class RegionController extends Controller
 {
@@ -13,7 +17,8 @@ class RegionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+public function index()
     {   
         
         return view('cms.regions', [
@@ -119,4 +124,33 @@ class RegionController extends Controller
       
       return $id;
     }
+ public function export()
+    {
+        return Excel::download(new RegionsExport, 'regions.xlsx');
+    }
+    
+    public function import()
+    {
+        Excel::import(new RegionsImport, 'regions.xlsx');
+        
+        return redirect('/')->with('success', 'All good!');    }
+   
+    // public function importExcel(Request $request)
+    // {
+    //     if($request->hasFile('import_file')){
+    //         Excel::load($request->file('import_file')->getRealPath(), function ($reader) {
+    //             foreach ($reader->toArray() as $key => $row) {
+    //                 $data['name'] = $row['name'];
+
+    //                 if(!empty($data)) {
+    //                    DB::table('regions')->insert($data);
+    //                 }
+    //             }
+    //         });
+    //     }
+
+    //     Session::put('success', 'Youe file successfully import in database!!!');
+
+    //     return back();
+    // }
 }

@@ -52,24 +52,25 @@
                 <input type="text" name="name" class="form-control"
                   v-model="form.name" required>
               </div>
-                          
-            </div>
-            
+            </div>   
           </div>
-                    
-          <div class="card-footer">
+        <div class="card-footer">
             <button type="submit" 
               class="btn btn-pill btn-success btn-lg float-right">
               Submit
             </button>
           </div>
-          
+         </div>
         </div>
-        
-      </form>
-                      
-  </div>
-    
-</div>
+       </form>
+
+    <div class="card-footer">
+    <input type="file" name="import_file" />
+    <button type="submit" 
+              class="btn btn-pill btn-success btn-lg float-right">
+              Import File
+            </button>
+          </div>
+        </div>
 
 @endsection
