@@ -239,5 +239,26 @@ var vm = new Vue({
       axios.get(baseUrl + "/regions/" + selectedParentId + "/districts")
            .then(response => this.parents3 = response.data)
     },
+    uploadExcel() {
+      let el = document.getElementById("import-file")
+      let file = el.files[0]
+      let formData = new FormData()
+      if(file) {
+        formData.append('import_file', file)
+        this.isLoading = true
+        axios.post(baseUrl + "/upload_excel", formData, 
+                    {headers: {'Content-Type': 'multipart/form-data'}})
+             .then(({data}) => {
+               this.isLoading = false
+               showHideAlert('success-alert')
+             })
+             .catch(error => {
+               console.error(error)
+               this.isLoading = false
+               this.errorMessage = error.response.data.message
+               this.showError = true
+             })
+      }
+    },
   }
 })

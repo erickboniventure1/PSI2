@@ -65,9 +65,9 @@
        </form>
 
     <div class="card-footer">
-    <input type="file" name="import_file" />
-    <button type="submit" 
-              class="btn btn-pill btn-success btn-lg float-right">
+    <input type="file" name="import_file" id="import-file"/>
+    <button class="btn btn-pill btn-success btn-lg float-right"
+              @click="uploadExcel">
               Import File
             </button>
           </div>

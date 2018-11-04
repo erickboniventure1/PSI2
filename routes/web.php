@@ -39,7 +39,7 @@ Route::prefix('/api')->group(function() {
   Route::patch('/regions/{region}/picture', 'RegionController@updatePicture');
   Route::delete('/regions/{region}', 'RegionController@destroy');
   Route::get('/regions/{type}', 'RegionController@downloadExcel');
-  Route::post('/regions', 'RegionController@importExcel');
+  Route::post('/regions/upload_excel', 'RegionController@importExcel');
 
 
   Route::get('/districts', 'DistrictController@districts');

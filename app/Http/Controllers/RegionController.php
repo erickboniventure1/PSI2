@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Region;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use Excel;
+use DB;
 use App\Exports\RegionsExport;
 use App\Exports\RegionsInport;
 
@@ -124,33 +125,32 @@ public function index()
       
       return $id;
     }
- public function export()
+    public function export()
     {
         return Excel::download(new RegionsExport, 'regions.xlsx');
     }
-    
-    public function import()
+    public function importExcel(Request $request)
     {
-        Excel::import(new RegionsImport, 'regions.xlsx');
-        
-        return redirect('/')->with('success', 'All good!');    }
-   
-    // public function importExcel(Request $request)
-    // {
-    //     if($request->hasFile('import_file')){
-    //         Excel::load($request->file('import_file')->getRealPath(), function ($reader) {
-    //             foreach ($reader->toArray() as $key => $row) {
-    //                 $data['name'] = $row['name'];
 
-    //                 if(!empty($data)) {
-    //                    DB::table('regions')->insert($data);
-    //                 }
-    //             }
-    //         });
-    //     }
+        if($request->hasFile('import_file')){
+                                 // Region::create(['name' => 'erick']);
 
-    //     Session::put('success', 'Youe file successfully import in database!!!');
+            Excel::load($request->file('import_file')->getRealPath(), function ($reader) {
+                foreach ($reader->toArray() as $key => $row) {
+                    $data['name'] = $row['name'];
 
-    //     return back();
-    // }
+                    if(!empty($data)) {
+                       DB::table('regions')->insert($data);
+                    }
+                }
+            });
+        }
+
+        return redirect()->route('regions.create')
+                         ->with('message', 'Region created successfully');
+
+        // Session::put('success', 'Youe file successfully import in database!!!');
+
+        // return back();
+    }
 }
