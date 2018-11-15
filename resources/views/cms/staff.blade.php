@@ -38,6 +38,9 @@
             <tr>
               <th class="d-none"></th>
               <th>Name</th>
+              <th>Facility Name</th>
+              <th>Region</th>
+              <th>District</th>
               <th>Phone Number</th>
               <th>Device SN</th>
               <th>Device IMEI</th>
@@ -53,6 +56,9 @@
               <tr @click="onConfirm({{$st->id}}, $event)">
                 <td class="d-none">{{ $st->id }}</td>
                 <td>{{ fullName($st->first_name, $st->last_name) }}</td>
+                <td>{{ $st->facility->name}}</td>
+                <td>{{ $st->facility->district->region->name}}</td>
+                <td>{{ $st->facility->district->name}}</td>
                 <td>{{ $st->phone_number }}</td>
                 <td>{{ $st->device_sn  }}</td>
                 <td>{{ $st->device_imei  }}</td>
@@ -82,6 +88,8 @@
       </div>
       
     </div>
+
+    
     
   </div>
   

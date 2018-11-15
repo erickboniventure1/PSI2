@@ -6,6 +6,7 @@
   window.item = null
   //Save dummy facility fields in the window
   window.fields = null
+  window.fields2 = null
   //Save the baseUrl in the window
   window.baseUrl = '/api/facilities'
 </script>
@@ -38,7 +39,7 @@
             <tr>
               <th class="d-none"></th>
               <th>Facility Name</th>
-              <th>Ipc Leader</th>
+              <th>Staff</th>
               <th>District</th>
               <th>Region</th>
               <th>Status</th>

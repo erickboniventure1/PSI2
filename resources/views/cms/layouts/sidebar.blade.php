@@ -41,7 +41,7 @@
         <li class="nav-item">
           <a class="nav-link {{ areActiveRoutes(['staff.index', 'staff.create', 'staff.edit']) }}" 
              href="{{ route('staff.index') }}">
-          <i class="nav-icon cui-briefcase"></i>Staff</a>
+          <i class="nav-icon cui-briefcase"></i>IPC & PROV</a>
         </li>
       @endcan
       

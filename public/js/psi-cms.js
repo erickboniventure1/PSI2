@@ -3,7 +3,7 @@ var table = null
 $(function () {
       
   table = $("#she-table").DataTable({
-    iDisplayLength: 6,
+    iDisplayLength: 25,
     bLengthChange: false,
     order: [[0, 'desc']],
   })
@@ -58,6 +58,7 @@ var vm = new Vue({
   el:'#vue-container',
   data: {
     form: {},
+    form2: {},
     parents: [],
     parents2: [],
     parents3: [],
@@ -84,7 +85,12 @@ var vm = new Vue({
     }
     if (window.parents2 !== undefined) {
       this.parents2 = parents2
+    }if (window.parents3 !== undefined) {
+      this.parents3 = parents3
     }
+
+    this.copyFields(fields, this.form2)
+
   },
   mounted() {
     //Set up data-binding on date-pickers
@@ -239,6 +245,40 @@ var vm = new Vue({
       axios.get(baseUrl + "/regions/" + selectedParentId + "/districts")
            .then(response => this.parents3 = response.data)
     },
+    fetchChildren2() {
+      let selectedParentId = this.form2.region_id
+      axios.get(baseUrl + "/regions/" + selectedParentId + "/districts")
+           .then(response => this.parents3 = response.data)
+    },
+    onUploadFacilities() {
+      let el = document.getElementById("import-file")
+      let file = el.files[0]
+      let formData = new FormData()
+      for(let field in this.form2) {
+        formData.append(field, this.form2[field])
+      }
+      if(file) {
+        formData.append('import_file', file)
+        this.isLoading = true
+        axios.post(baseUrl + "/upload_excel", formData, 
+                    {headers: {'Content-Type': 'multipart/form-data'}})
+             .then(({data}) => {
+               let body = $("html, body");
+               body.stop().animate({scrollTop:0}, 500, 'swing')
+               this.isLoading = false
+               showHideAlert('success-alert')
+             })
+             .catch(error => {
+               console.error(error)
+               let body = $("html, body");
+               body.stop().animate({scrollTop:0}, 500, 'swing')
+               this.isLoading = false
+               this.errorMessage = error.response.data.message
+               this.showError = true
+             })
+      }
+    },
+
     uploadExcel() {
       let el = document.getElementById("import-file")
       let file = el.files[0]
@@ -260,5 +300,10 @@ var vm = new Vue({
              })
       }
     },
+
+
+
+
+
   }
 })

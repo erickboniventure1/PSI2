@@ -7,8 +7,6 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-
 //Initialize tooltips everywhere
 $(function() {
 

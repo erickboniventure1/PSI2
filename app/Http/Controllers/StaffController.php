@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Staff;
 use App\Facility;
 use Illuminate\Http\Request;
+use DB;
+use Excel;
 
 class StaffController extends Controller
 {
@@ -161,4 +163,39 @@ class StaffController extends Controller
       
       return $id;
     }
+
+
+
+    public function importExcel(Request $request)
+      {
+        // $facility_name=$request->get('facility_id');
+
+          if($request->hasFile('import_file')){
+               Excel::load($request->file('import_file')->getRealPath(), function ($reader) {
+                  foreach ($reader->toArray() as $key => $row) {
+                        $data['first_name'] = $row['first_name'];
+                        $data['last_name']=$row['last_name']; 
+                        $data['phone_number']=$row['phone_number']; 
+                        $data['device_sn']=$row['device_sn']; 
+                        $data['device_imei']=$row['device_imei']; 
+                        $data['status']=$row['status']; 
+                        $data['description']=$row['description']; 
+                        $data['type']=$row['type'];
+                        $data['facility_id'] =$row['facility_name'];
+              if(!empty($data)) {
+                         DB::table('staff')->insert($data);
+                      }
+                  }
+              });
+          }
+
+          return redirect()->route('staff.create')
+                           ->with('message', 'Region created successfully');
+      }
+
+      public function getIpc(){
+      return  Staff::where('type', IPC)->get();
+      }
+
+
 }

@@ -12,7 +12,7 @@
                                   initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <link href="{{asset('images/fav.png')}}" rel="shortcut icon" type="image">
+    <link href="{{asset('images/psi2.png')}}" rel="shortcut icon" type="image">
 
     {{-- DataTable Css --}}
     <link rel="stylesheet" type="text/css"
@@ -25,7 +25,7 @@
     {{-- <link href="/css/datepicker.css" rel="stylesheet"> --}}
 
     <script src="/js/app.js"></script>
-        
+   
     {{-- DataTable Js--}}
     <script type="text/javascript" charset="utf8"
       src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>

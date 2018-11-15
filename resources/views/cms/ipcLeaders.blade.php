@@ -25,7 +25,7 @@
         class="btn btn-pill btn-success mb-3 float-right"
         href="{{ route('ipcLeaders.create') }}">
         <span class="btn-text">
-          Create IpcLeader</span>
+          Create Staff</span>
       </a>
       
       <div class="table-responsive">
@@ -37,7 +37,8 @@
           <thead>
             <tr>
               <th class="d-none"></th>
-              <th>IPC Leader Name</th>
+              <th>Staff Name</th>
+              <th>Image</th>
               <th>Phone Number</th>
               <th>Device SN</th>
               <th>Device IMEI</th>
@@ -52,10 +53,12 @@
               <tr @click="onConfirm({{$ipcLeader->id}}, $event)">
                 <td class="d-none">{{ $ipcLeader->id }}</td>
                 <td>{{ fullName($ipcLeader->first_name, $ipcLeader->last_name) }}</td>
+                <td>{{ $ipcLeader->ipc_leader_pictures }}</td>
                 <td>{{ $ipcLeader->phone_number }}</td>
                 <td>{{ $ipcLeader->device_sn  }}</td>
                 <td>{{ $ipcLeader->device_imei  }}</td>
                 <td>{{ ($ipcLeader->status) ? 'Active' : 'InActive' }}</td>
+
                 <td>
                   <div class="btn-group">
                     <a role="button" class="btn btn-pill btn-warning" 

@@ -142,15 +142,17 @@
             <button type="submit" 
               class="btn btn-pill btn-success btn-lg float-right">
               Submit
+          </button>
+         </div>
+        </div>
+       </form>
+     </div>
+    <div class="card-footer">
+    <input type="file" name="import_file" id="import-file"/>
+    <button class="btn btn-pill btn-success btn-lg float-right"
+              @click="uploadExcel">
+              Import File
             </button>
           </div>
-          
         </div>
-        
-      </form>
-                      
-  </div>
-    
-</div>
-
 @endsection

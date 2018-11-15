@@ -7,6 +7,9 @@ use App\User;
 use App\Region;
 use App\District;
 use Illuminate\Http\Request;
+use Excel;
+use DB;
+// use App\Charts\FacilityChart;
 
 class FacilityController extends Controller
 {
@@ -82,6 +85,39 @@ class FacilityController extends Controller
   		// }
       return redirect()->route('facilities.create')
                        ->with('message', 'Facility created successfully');
+    }
+
+    public function importExcel(Request $request) 
+    {
+        $this->validate($request, [
+            'region_id' => 'required',
+            'district_id' => 'required',
+            'description' => 'nullable',
+            'user_id' => 'required',
+        ]);
+
+        if($request->hasFile('import_file')){
+
+            Excel::load($request->file('import_file')->getRealPath(), 
+                function ($reader) use($request) {
+                foreach ($reader->toArray() as $key => $row) {
+                    $data['name'] = $row['name'];
+                    $data['description'] = $row['description'];
+                    $data['user_id'] = $request->user_id;
+                    $data['region_id'] = $request->region_id;
+                    $data['district_id'] = $request->district_id;
+                    $data['status'] = true;
+
+                    if(!empty($data)) {
+                       DB::table('facilities')->insert($data);
+                    }
+                }
+            });
+        }
+
+        return redirect()->route('facilities.create')
+                         ->with('message', 'Facilities created successfully');
+
     }
 
     /**
@@ -170,4 +206,13 @@ class FacilityController extends Controller
     public function districts(Region $region) {
       return $region->districts()->get();
     }
+//     public function charts(){
+//  $today_users = Facility::whereDate('created_at', today())->count();
+// $yesterday_users = Facility::whereDate('created_at', today()->subDays(1))->count();
+// $users_2_days_ago = Facility::whereDate('created_at', today()->subDays(2))->count();
+
+// $chart = new FacilityChart;
+// $chart->labels(['2 days ago', 'Yesterday', 'Today']);
+// $chart->dataset('My dataset', 'line', [$users_2_days_ago, $yesterday_users, $today_users]);
+// }
 }

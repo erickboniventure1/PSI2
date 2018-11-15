@@ -6,10 +6,6 @@ use App\Region;
 use Illuminate\Http\Request;
 use Excel;
 use DB;
-use App\Exports\RegionsExport;
-use App\Exports\RegionsInport;
-
-
 
 class RegionController extends Controller
 {
@@ -147,7 +143,7 @@ public function index()
         }
 
         return redirect()->route('regions.create')
-                         ->with('message', 'Region created successfully');
+                         ->with('message', 'Regions created successfully');
 
         // Session::put('success', 'Youe file successfully import in database!!!');
 

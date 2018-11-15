@@ -42,7 +42,7 @@
         
           <div class="card-header">
            <!--  Users Form -->
-            IpcLeader Form
+            Staff Form
 
           </div>
           
@@ -94,18 +94,15 @@
                   <option value="0">InActive</option>
                 </select>
               </div>
-                          
-            </div>
-            
+             </div>
             <div class="col-md-4">
-              
               <div class="form-group text-center">
                  <label for="video_link">User Picture:</label>
-                <label for="video_link">Ipc Leader Picture:</label>
+                <label for="video_link">Staff Picture:</label>
                 <div class="picture-container">
                   <img 
                     v-show="showPicture"
-                    :src="form.picture" alt="IpcLeader Picture"
+                    :src="form.picture" alt="StaffPicture"
                     class="picture img-thumbnail">
                   <i v-show="showIcon" class="fa fa-5x fa-file-photo-o"></i>
                   <div class="picture-placeholder d-flex align-items-center justify-content-center"

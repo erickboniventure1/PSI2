@@ -18,6 +18,7 @@ Route::view('/admin/login', 'cms.login')->name('admin_login');
 Route::middleware('auth')->prefix('/admin')->group(function() {
 // Route::prefix('/admin')->group(function() {
   Route::get('/', 'DashboardController@index')->name('home');
+  // Route::get('/', 'FacilityController@charts')->name('chart');
   // Route::get('/', 'IpcLeaderDashboardController@index')->name('ipc');
   Route::resources([
     'regions' => 'RegionController',
@@ -52,6 +53,8 @@ Route::prefix('/api')->group(function() {
   Route::patch('/staff/{staff}', 'StaffController@update');
   Route::patch('/staff/{staff}/picture', 'StaffController@updatePicture');
   Route::delete('/staff/{staff}', 'StaffController@destroy');
+  Route::post('/staff/upload_excel', 'StaffController@importExcel');
+
 
   Route::get('/ipcLeaders', 'IpcLeaderController@ipcLeader');
   Route::post('/ipcLeaders', 'IpcLeaderController@store');
@@ -65,5 +68,6 @@ Route::prefix('/api')->group(function() {
   Route::patch('/facilities/{facility}', 'FacilityController@update');
   Route::patch('/facilities/{facility}/picture', 'FacilityController@updatePicture');
   Route::delete('/facilities/{facility}', 'FacilityController@destroy');
-  
+  Route::post('/facilities/upload_excel', 'FacilityController@importExcel');
+
 });

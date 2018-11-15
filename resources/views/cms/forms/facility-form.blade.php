@@ -9,14 +9,20 @@
   //Save the parent models in the window
   window.parents = {!! json_encode($ipcLeaders) !!}
   window.parents2 = {!! json_encode($regions) !!}
+  window.parents3 = {!! json_encode($districts) !!}
   //Save the facility fields in the window
   window.fields = {
       name:'',
-        description: '',
-        region_id: '',
-        user_id: '',
-        district_id: '',
-        status: '',
+      description: '',
+      region_id: '',
+      user_id: '',
+      district_id: '',
+      status: '',
+  }
+  window.fields2 = {
+      region_id: '',
+      user_id: '',
+      district_id: '',
   }
   //Save the baseUrl in the window
   window.baseUrl = '/api/facilities'
@@ -39,12 +45,12 @@
 <div class="row">
         
     <div class="col-12">   
+
+      @include('cms.loaders.loader')
                   
       <form class="position-relative" 
         method="post" @submit.prevent="onSubmit">
                 
-        @include('cms.loaders.loader')
-
         <div class="card">
         
           <div class="card-header">
@@ -116,8 +122,44 @@
         </div>
         
       </form>
+
+  <div class="col-6">
+    <form @submit.prevent="onUploadFacilities">
+
+      <label for="name">Ipc Leader Name:</label>
+      <select name="user_id" class="form-control"
+        v-model="form2.user_id" required>
+        <option 
+          v-for="parent in parents" :key="parent.id" 
+          :value="parent.id">@{{parent.first_name + " " + parent.last_name}}</option>
+      </select>
+
+       <label for="name">Region:</label>
+      <select name="region_id" class="form-control"
+        v-model="form2.region_id" required @change="fetchChildren2">
+        <option 
+          v-for="parent in parents2" :key="parent.id" 
+          :value="parent.id">@{{parent.name}}</option>
+      </select>
+      <label for="name">District:</label>
+      <select name="district_id" class="form-control"
+        v-model="form2.district_id" required>
+        <option 
+          v-for="parent in parents3" :key="parent.id" 
+          :value="parent.id">@{{parent.name}}</option>
+      </select>
+
+      <label for="name">Excel File:</label><br>
+      <input type="file" name="import_file" id="import-file"/>
+
+      <button type="submit" class="btn btn-pill btn-success btn-lg float-right">
+                Import File
+      </button>
+    </form>
+   </div>
                       
   </div>
+   
     
 </div>
 

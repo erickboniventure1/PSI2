@@ -13,6 +13,8 @@ try {
     require('bootstrap');
 } catch (e) {}
 
+window.Vue = require('vue');
+
 window.Popper = require('popper.js').default;
 
 window.CoreUI = require('@coreui/coreui');
